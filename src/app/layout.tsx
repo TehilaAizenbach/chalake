@@ -9,8 +9,8 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "לוח משימות - סטודיו עיצוב",
-  description: "לוח קנבן לניהול עבודות עיצוב והדפסה",
+  title: "החלאקה של אבי ✂️🎉",
+  description: "לוח קנבן לניהול משימות החלאקה – מתנות, קניות, אוכל, גרפיקה ותיאומים",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

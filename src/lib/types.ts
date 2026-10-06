@@ -10,8 +10,16 @@ export interface Task {
   title: string;
   description: string | null;
   status: TaskStatus;
+  category: TaskCategory;
   assignee_name: string | null;
+  waiting_for: string[];
+  approved_by: string[];
   created_at: string;
+}
+
+export interface FamilyMember {
+  id: string;
+  name: string;
 }
 
 export const STATUS_ORDER: TaskStatus[] = [
@@ -65,3 +73,58 @@ export const STATUS_STYLES: Record<
     chip: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300",
   },
 };
+
+export const CATEGORIES = [
+  "מתנות",
+  "קניות לצילומים",
+  "קניות לחלאקה",
+  "אוכל",
+  "לחיים בטקס עצמו",
+  "גרפיקה",
+] as const;
+
+export type TaskCategory = (typeof CATEGORIES)[number];
+
+export const DEFAULT_CATEGORY: TaskCategory = "גרפיקה";
+
+export const CATEGORY_STYLES: Record<
+  TaskCategory,
+  { emoji: string; badge: string; active: string }
+> = {
+  "מתנות": {
+    emoji: "🎁",
+    badge: "bg-pink-100 text-pink-700 ring-pink-200 dark:bg-pink-900/40 dark:text-pink-300 dark:ring-pink-800",
+    active: "bg-pink-500 text-white ring-pink-500",
+  },
+  "קניות לצילומים": {
+    emoji: "📸",
+    badge: "bg-sky-100 text-sky-700 ring-sky-200 dark:bg-sky-900/40 dark:text-sky-300 dark:ring-sky-800",
+    active: "bg-sky-500 text-white ring-sky-500",
+  },
+  "קניות לחלאקה": {
+    emoji: "🛍️",
+    badge: "bg-violet-100 text-violet-700 ring-violet-200 dark:bg-violet-900/40 dark:text-violet-300 dark:ring-violet-800",
+    active: "bg-violet-500 text-white ring-violet-500",
+  },
+  "אוכל": {
+    emoji: "🍰",
+    badge: "bg-orange-100 text-orange-700 ring-orange-200 dark:bg-orange-900/40 dark:text-orange-300 dark:ring-orange-800",
+    active: "bg-orange-500 text-white ring-orange-500",
+  },
+  "לחיים בטקס עצמו": {
+    emoji: "🥂",
+    badge: "bg-amber-100 text-amber-800 ring-amber-200 dark:bg-amber-900/40 dark:text-amber-300 dark:ring-amber-800",
+    active: "bg-amber-500 text-white ring-amber-500",
+  },
+  "גרפיקה": {
+    emoji: "🎨",
+    badge: "bg-teal-100 text-teal-700 ring-teal-200 dark:bg-teal-900/40 dark:text-teal-300 dark:ring-teal-800",
+    active: "bg-teal-500 text-white ring-teal-500",
+  },
+};
+
+export function getCategoryStyle(category: string | null | undefined) {
+  return (
+    CATEGORY_STYLES[category as TaskCategory] ?? CATEGORY_STYLES[DEFAULT_CATEGORY]
+  );
+}
